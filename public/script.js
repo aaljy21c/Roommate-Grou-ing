@@ -279,32 +279,45 @@ btnModalEdit.addEventListener('click', async () => {
     const pwd = modalPassword.value.trim();
     if (!pwd) return alert('비밀번호를 입력하세요.');
     
-    // To allow edit, we need to verify password first, but let's just transition to edit mode and use the password on submit.
-    // However, user experience is better if we verify now, or just let them edit and verify on save.
-    // Let's verify password first by a dummy edit or just fetch...
-    // Actually, we can fetch room details (but password is not exposed).
-    // Let's just enter edit mode and put the password in the main form password input.
-    
-    const room = allRooms.find(r => r.id === selectedRoomForAction);
-    if (!room) return;
-    
-    currentMode = 'edit';
-    selectedType = room.type;
-    editRoomId = room.id;
-    selectedStudents = new Set(room.members);
-    roomPassword.value = pwd; 
-    roomBirthdate.value = ''; // They need to re-enter birthdate for edit, or leave blank if master
-    
-    btnType2.classList.remove('active');
-    btnType3.classList.remove('active');
-    selectionArea.classList.remove('hidden');
-    requiredCountEl.textContent = selectedType;
-    document.getElementById('selection-title').textContent = '인원 선택 (방 수정)';
-    
-    renderStudentsGrid();
-    selectionArea.scrollIntoView({ behavior: 'smooth' });
-    
-    modal.classList.add('hidden');
+    try {
+        const res = await fetch(`${API_URL}/room/${selectedRoomForAction}/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: pwd })
+        });
+        
+        const data = await res.json();
+        if (data.error) {
+            return alert(data.error);
+        }
+        
+        // Success - move to edit mode
+        const room = allRooms.find(r => r.id === selectedRoomForAction);
+        if (!room) return;
+        
+        currentMode = 'edit';
+        selectedType = room.type;
+        editRoomId = room.id;
+        selectedStudents = new Set(room.members);
+        
+        // 처음처럼 세팅할 수 있도록 초기화
+        roomPassword.value = ''; 
+        roomBirthdate.value = ''; 
+        
+        btnType2.classList.remove('active');
+        btnType3.classList.remove('active');
+        selectionArea.classList.remove('hidden');
+        requiredCountEl.textContent = selectedType;
+        document.getElementById('selection-title').textContent = '인원 선택 (방 수정)';
+        
+        renderStudentsGrid();
+        selectionArea.scrollIntoView({ behavior: 'smooth' });
+        
+        modal.classList.add('hidden');
+    } catch (e) {
+        console.error(e);
+        alert('비밀번호 확인 중 오류가 발생했습니다.');
+    }
 });
 
 btnModalDelete.addEventListener('click', async () => {
