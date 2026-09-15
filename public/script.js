@@ -8,6 +8,7 @@ let currentMode = null; // 'create', 'edit', null
 let selectedType = null; // 2 or 3
 let selectedStudents = new Set();
 let editRoomId = null;
+let verifiedOldPassword = null; // To store old password for PUT request
 
 // DOM Elements
 const twoPersonCountEl = document.getElementById('two-person-count');
@@ -208,6 +209,7 @@ function cancelCreation() {
     selectedType = null;
     selectedStudents.clear();
     editRoomId = null;
+    verifiedOldPassword = null;
     
     btnType2.classList.remove('active');
     btnType3.classList.remove('active');
@@ -245,7 +247,7 @@ btnSubmit.addEventListener('click', async () => {
             res = await fetch(`${API_URL}/room/${editRoomId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password: pwd, birthdate: bd, members })
+                body: JSON.stringify({ oldPassword: verifiedOldPassword, newPassword: pwd, birthdate: bd, members })
             });
         }
         
@@ -301,6 +303,7 @@ btnModalEdit.addEventListener('click', async () => {
         selectedType = room.type;
         editRoomId = room.id;
         selectedStudents = new Set(room.members);
+        verifiedOldPassword = pwd; // Save old password for submission
         
         // 처음처럼 세팅할 수 있도록 초기화
         roomPassword.value = ''; 

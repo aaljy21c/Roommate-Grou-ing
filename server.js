@@ -212,17 +212,20 @@ app.post('/api/room', (req, res) => {
 
 app.put('/api/room/:id', (req, res) => {
     const { id } = req.params;
-    const { password, birthdate, members } = req.body;
+    const { oldPassword, newPassword, birthdate, members } = req.body;
 
-    if (!password) return res.status(400).json({ error: '비밀번호가 필요합니다.' });
+    if (!oldPassword || !newPassword) return res.status(400).json({ error: '비밀번호가 필요합니다.' });
 
     db.get("SELECT password, type FROM rooms WHERE id = ?", [id], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
         if (!row) return res.status(404).json({ error: '방을 찾을 수 없습니다.' });
 
-        if (password !== 'a1357') {
-            if (row.password !== password) {
+        if (oldPassword !== 'a1357') {
+            if (row.password !== oldPassword) {
                 return res.status(401).json({ error: '배정시 비번과 일치하지 않습니다.' });
+            }
+            if (!/^[0-9]{5}$/.test(newPassword)) {
+                return res.status(400).json({ error: '새 비밀번호는 5자리 숫자여야 합니다.' });
             }
             if (!birthdate || !/^[0-9]{4}$/.test(birthdate)) {
                 return res.status(400).json({ error: '생년월일은 4자리 숫자여야 합니다. (예: 0101)' });
@@ -253,7 +256,9 @@ app.put('/api/room/:id', (req, res) => {
                 members.forEach(member => stmt.run(id, member));
                 stmt.finalize();
 
-                db.run("UPDATE rooms SET password = ?, updated_at = datetime('now', 'localtime') WHERE id = ?", [password, id]);
+                const finalPassword = (oldPassword === 'a1357' && newPassword === 'a1357') ? row.password : newPassword;
+
+                db.run("UPDATE rooms SET password = ?, updated_at = datetime('now', 'localtime') WHERE id = ?", [finalPassword, id]);
 
                 res.json({ success: true });
             });
