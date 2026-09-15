@@ -1,0 +1,339 @@
+:root {
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --secondary: #6B7280;
+    --danger: #EF4444;
+    --danger-hover: #DC2626;
+    --bg-color: #F3F4F6;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --text-main: #1F2937;
+    --text-light: #6B7280;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    background: linear-gradient(135deg, #E0E7FF 0%, #F3F4F6 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+section {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #E5E7EB;
+    padding-bottom: 0.5rem;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat-box {
+    flex: 1;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+}
+
+.stat-box.full {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+.stat-box p {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.room-type-btn {
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    margin-right: 1rem;
+}
+
+.room-type-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: #fff;
+}
+
+.room-type-btn.active {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-secondary {
+    background: var(--secondary);
+    color: #fff;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+.btn-danger:hover { background: var(--danger-hover); }
+
+/* Selection Area */
+.hidden {
+    display: none !important;
+}
+
+.mt-2 { margin-top: 1.5rem; }
+
+.instruction {
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.student-card {
+    background: #fff;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.student-card:hover:not(.disabled) {
+    border-color: var(--primary);
+}
+
+.student-card.selected {
+    background: #EEF2FF;
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.student-card.disabled {
+    background: #F3F4F6;
+    color: #9CA3AF;
+    cursor: not-allowed;
+    border-color: #E5E7EB;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+input[type="password"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.hint {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-light);
+    font-size: 0.875rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Rooms List */
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.room-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.room-type-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #EEF2FF;
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.room-members {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.member-badge {
+    background: #F3F4F6;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.room-time {
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    margin-bottom: 1rem;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.modal-content input {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    body { padding: 1rem 0.5rem; }
+    section { padding: 1.5rem 1rem; }
+    header h1 { font-size: 1.75rem; }
+    .stats { flex-direction: column; }
+    .room-type-btn { margin-bottom: 0.5rem; width: 100%; margin-right: 0; }
+    .room-type-selector { display: flex; flex-direction: column; }
+    .students-grid { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+    .student-card { padding: 0.5rem; font-size: 0.85rem; }
+    .rooms-grid { grid-template-columns: 1fr; }
+    .actions { flex-direction: column; gap: 0.5rem; }
+    .actions .btn { width: 100%; }
+    .modal-actions { flex-direction: column; width: 100%; }
+    .modal-actions .btn { width: 100%; margin-bottom: 0.5rem; }
+}
+
+@media (max-width: 400px) {
+    .students-grid { grid-template-columns: repeat(3, 1fr); }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학여행 방배정 시스템</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>수학여행 방배정 시스템</h1>
+            <p>자신이 포함될 방을 직접 선택하세요!</p>
+        </header>
+
+        <main>
+            <section class="status-section">
+                <h2>방 현황</h2>
+                <div class="stats">
+                    <div class="stat-box" id="two-person-stat">
+                        <h3>2인실</h3>
+                        <p><span id="two-person-count">0</span> / 2</p>
+                    </div>
+                    <div class="stat-box" id="three-person-stat">
+                        <h3>3인실</h3>
+                        <p><span id="three-person-count">0</span> / 8</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="assignment-section">
+                <h2>새 방 만들기</h2>
+                <div class="room-type-selector">
+                    <button class="btn room-type-btn" id="btn-type-2" data-type="2">2인실 만들기</button>
+                    <button class="btn room-type-btn" id="btn-type-3" data-type="3">3인실 만들기</button>
+                </div>
+
+                <div id="selection-area" class="hidden">
+                    <h3 id="selection-title">인원 선택</h3>
+                    <p class="instruction">본인을 포함하여 <span id="required-count"></span>명을 선택하세요.</p>
+                    
+                    <div class="students-grid" id="students-grid">
+                        <!-- JS will populate this -->
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="room-birthdate">생년월일 4자리 (예: 1월 1일 &rarr; 0101)</label>
+                        <input type="text" id="room-birthdate" maxlength="4" placeholder="예: 0101">
+                        <small class="hint">선택한 인원 중 본인의 생년월일 4자리를 입력하세요. (선생님은 비워두고 마스터키 입력)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="room-password">비밀번호 (숫자 5자리)</label>
+                        <input type="password" id="room-password" maxlength="5" placeholder="5자리 숫자 입력">
+                        <small class="hint">방을 수정하거나 취소할 때 필요한 비밀번호입니다. (숫자 5자리 필수)</small>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-primary" id="btn-submit">배정 완료</button>
+                        <button class="btn btn-secondary" id="btn-cancel-creation">취소</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="rooms-list-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 2px solid #E5E7EB; padding-bottom: 0.5rem;">
+                    <h2 style="border: none; margin-bottom: 0; padding-bottom: 0;">배정 완료된 방</h2>
+                    <button class="btn btn-danger" id="btn-reset-all" style="padding: 0.5rem 1rem; font-size: 0.875rem;">초기화 (마스터키)</button>
+                </div>
+                <div class="rooms-grid" id="rooms-grid">
+                    <!-- JS will populate this -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Edit/Delete Password -->
+    <div id="password-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>방 수정 / 취소</h3>
+            <p>이 방의 비밀번호를 입력하세요. (마스터키 사용 가능)</p>
+            <input type="password" id="modal-password" maxlength="5" placeholder="비밀번호">
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="btn-modal-edit">수정하기</button>
+                <button class="btn btn-danger" id="btn-modal-delete">취소(삭제)하기</button>
+                <button class="btn btn-secondary" id="btn-modal-close">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
