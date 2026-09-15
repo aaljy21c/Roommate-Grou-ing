@@ -253,7 +253,7 @@ app.put('/api/room/:id', (req, res) => {
                 members.forEach(member => stmt.run(id, member));
                 stmt.finalize();
 
-                db.run("UPDATE rooms SET updated_at = datetime('now', 'localtime') WHERE id = ?", [id]);
+                db.run("UPDATE rooms SET password = ?, updated_at = datetime('now', 'localtime') WHERE id = ?", [password, id]);
 
                 res.json({ success: true });
             });
