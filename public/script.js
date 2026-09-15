@@ -279,6 +279,8 @@ btnModalEdit.addEventListener('click', async () => {
     const pwd = modalPassword.value.trim();
     if (!pwd) return alert('비밀번호를 입력하세요.');
     
+    if (!confirm('정말로 이 방 배정을 수정하시겠습니까?')) return;
+    
     try {
         const res = await fetch(`${API_URL}/room/${selectedRoomForAction}/verify`, {
             method: 'POST',
