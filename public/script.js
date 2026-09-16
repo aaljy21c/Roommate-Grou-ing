@@ -41,7 +41,7 @@ async function init() {
 
 async function fetchStatus() {
     try {
-        const response = await fetch(`${API_URL}/status`);
+        const response = await fetch(`${API_URL}/status?t=${new Date().getTime()}`, { cache: 'no-store' });
         const data = await response.json();
         
         allStudents = data.students;
